@@ -1,26 +1,79 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+.infinite-chess-bg {
+  position: absolute;
+  top: -200vh;
+  left: -10vw;
+  width: 120vw;
+  height: 1000vh;
+  border: 1px solid white;
+  background-image: 
+    linear-gradient(45deg, rgba(255,255,255,0.15) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(255,255,255,0.15) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.2) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.2) 75%);
+  background-size: 10vw 10vw; /* Responsive size based on viewport width */
+  background-position: 0 0, 0 5vw, 5vw -5vw, -5vw 0px;
+  animation: subtle-float 15s ease-in-out infinite;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+.infinite-chess-bg:hover {
+  animation-play-state: paused;
+  background-size: 11vw 11vw;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Media queries for different screen sizes */
+@media (max-width: 768px) {
+  .infinite-chess-bg {
+    background-size: 15vw 15vw; /* Larger on mobile */
+    background-position: 0 0, 0 7.5vw, 7.5vw -7.5vw, -7.5vw 0px;
+  }
+  
+  .infinite-chess-bg:hover {
+    background-size: 16vw 16vw;
   }
 }
 
+@media (min-width: 1200px) {
+  .infinite-chess-bg {
+    background-size: 120px 120px; /* Fixed size on large screens */
+    background-position: 0 0, 0 60px, 60px -60px, -60px 0px;
+  }
+  
+  .infinite-chess-bg:hover {
+    background-size: 130px 130px;
+  }
+}
+
+@keyframes subtle-float {
+  0%, 100% {
+    transform: translateX(0) scale(1);
+  }
+  25% {
+    transform: translateX(5px) scale(1.01);
+  }
+  50% {
+    transform: translateX(0) scale(1);
+  }
+  75% {
+    transform: translateX(-5px) scale(1.01);
+  }
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+.animation-delay-600 {
+  animation-delay: 600ms;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
